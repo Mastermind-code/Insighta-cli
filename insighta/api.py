@@ -1,7 +1,9 @@
+import os
+
 import requests
 from insighta.credentials import load_credentials, save_credentials, clear_credentials
-
-BASE_URL = "http://localhost:8000/api/v1"
+    
+BASE_URL = os.getenv("INSIGHTA_API_URL", "stage-1-data-persistence-api-design.vercel.app/api/v1")
 
 def refresh_tokens(refresh_token: str) -> dict:
     """Calls the backend to get a new token pair."""
