@@ -1,10 +1,15 @@
 import typer
-from insighta.auth import app as auth_app
+from insighta.auth import login, logout, whoami
 from insighta.profiles import app as profiles_app
 
 app = typer.Typer(help="Insighta Labs+ Profile Intelligence CLI")
 
-app.add_typer(auth_app, name="auth")
+# Top-level auth commands (insighta login / logout / whoami)
+app.command("login")(login)
+app.command("logout")(logout)
+app.command("whoami")(whoami)
+
+# Profiles subcommand group
 app.add_typer(profiles_app, name="profiles")
 
 if __name__ == "__main__":
