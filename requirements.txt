@@ -1,0 +1,19 @@
+annotated-doc==0.0.4
+certifi==2026.4.22
+charset-normalizer==3.4.7
+click==8.3.3
+idna==3.13
+# Editable Git install with no remote (insighta==0.1.0)
+-e /home/adam/Documents/HNG/stage_3/insighta-cli
+markdown-it-py==4.0.0
+mdurl==0.1.2
+packaging==26.2
+Pygments==2.20.0
+python-dotenv==1.2.2
+requests==2.33.1
+rich==15.0.0
+setuptools==82.0.1
+shellingham==1.5.4
+typer==0.25.0
+urllib3==2.6.3
+wheel==0.47.0
