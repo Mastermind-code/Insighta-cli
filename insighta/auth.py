@@ -96,7 +96,7 @@ def login():
         f"{BASE_URL}/auth/whoami",
         headers={"Authorization": f"Bearer {access_token}", "X-API-Version": "1"}
     )
-    username = user_response.json().get("username", "unknown")
+    username = user_response.json().get("data", {}).get("username", "unknown")
     
     save_credentials(access_token, refresh_token, username)
     console.print(f"[green]Logged in as @{username}[/green]")
