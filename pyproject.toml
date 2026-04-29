@@ -1,0 +1,21 @@
+[build-system]
+requires = ["setuptools>=64", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "insighta"
+version = "0.1.0"
+description = "Insighta Labs+ CLI"
+requires-python = ">=3.8"
+dependencies = [
+    "typer",
+    "rich",
+    "requests",
+    "python-dotenv"
+]
+
+[tool.setuptools.packages.find]
+where = ["."]
+
+[project.scripts]
+insighta = "insighta.main:app"
