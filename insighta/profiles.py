@@ -142,13 +142,16 @@ def export(
     gender: str = typer.Option(None, help="Filter by gender"),
     country: str = typer.Option(None, "--country", help="Filter by country ID"),
     age_group: str = typer.Option(None, "--age-group", help="Filter by age group"),
+    sort_by: str = typer.Option("created_at", "--sort-by", help="Sort by field"),
+    order: str = typer.Option("desc", "--order", help="Sort order asc/desc"),
 ):
-    """Export profiles to a file."""
+    """Export profiles to a CSV file in the current directory."""
     if format != "csv":
         console.print("[red]Only CSV format is supported.[/red]")
         raise typer.Exit(1)
 
-    params = {}
+    from datetime import datetime
+    params = {"sort_by": sort_by, "order": order}
     if gender: params["gender"] = gender
     if country: params["country_id"] = country
     if age_group: params["age_group"] = age_group
@@ -157,7 +160,7 @@ def export(
         response = api_request("GET", "/profiles/export", params=params)
 
     if response.status_code == 200:
-        filename = "profiles_export.csv"
+        filename = f"profiles_{datetime.now().strftime('%Y%m%d_%H%M%S')}.csv"
         with open(filename, "wb") as f:
             f.write(response.content)
         console.print(f"[green]Exported to[/green] {filename}")
