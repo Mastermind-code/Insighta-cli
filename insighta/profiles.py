@@ -137,6 +137,30 @@ def create(name: str = typer.Option(..., "--name", help="Profile name")):
 
 
 @app.command()
+def delete(profile_id: str = typer.Argument(..., help="Profile UUID to delete")):
+    """Delete a profile by ID (admin only)."""
+    confirm = typer.confirm(f"Delete profile {profile_id}?")
+    if not confirm:
+        console.print("[yellow]Cancelled.[/yellow]")
+        raise typer.Exit(0)
+
+    with console.status("[bold red]Deleting profile..."):
+        response = api_request("DELETE", f"/profiles/{profile_id}")
+
+    if response.status_code == 204:
+        console.print("[green]Profile deleted.[/green]")
+    elif response.status_code == 403:
+        console.print("[red]Permission denied. Admin role required.[/red]")
+        raise typer.Exit(1)
+    elif response.status_code == 404:
+        console.print("[red]Profile not found.[/red]")
+        raise typer.Exit(1)
+    else:
+        console.print(f"[red]Error:[/red] {response.json().get('message')}")
+        raise typer.Exit(1)
+
+
+@app.command()
 def export(
     format: str = typer.Option("csv", "--format", help="Export format"),
     gender: str = typer.Option(None, help="Filter by gender"),
